@@ -1,0 +1,247 @@
+// ============================================================
+//  ML HUB — Research Data
+//  10 Landmark Machine Learning Studies
+// ============================================================
+
+const PAPERS = [
+  {
+    id: 1,
+    tag: "Deep Learning",
+    year: 2017,
+    title: "Attention Is All You Need",
+    authors: "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I.",
+    institution: "Google Brain / Google Research",
+    journal: "Advances in Neural Information Processing Systems (NeurIPS 2017)",
+    doi: "10.48550/arXiv.1706.03762",
+    citations: 87423,
+    abstract: "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+    keyContributions: [
+      "Introduced the Transformer architecture using only self-attention mechanisms",
+      "Achieved state-of-the-art BLEU scores on WMT 2014 En-De and En-Fr tasks",
+      "Enabled massive parallelization — drastically reduced training time vs RNNs",
+      "Introduced multi-head attention and sinusoidal positional encoding",
+      "Laid the foundation for BERT, GPT, T5 and all modern LLMs"
+    ],
+    methodology: "The model uses stacked self-attention and point-wise, fully connected layers for both the encoder and decoder. Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. The encoder maps input sequences to continuous representations; the decoder generates output sequences one element at a time. Positional encodings are added to capture sequence order without recurrence.",
+    results: "Achieved 28.4 BLEU on WMT 2014 English-to-German translation, improving over the best prior results by more than 2 BLEU. On WMT 2014 English-to-French, achieved a new single-model BLEU score of 41.0 after training for 3.5 days on 8 GPUs — a fraction of the time required by competing models.",
+    impact: "The Transformer is now the dominant architecture in NLP and increasingly in computer vision, audio, biology, and robotics. Directly spawned BERT (Google), GPT series (OpenAI), T5, PaLM, LLaMA, and virtually every modern language model. Considered one of the most influential AI papers ever published.",
+    tags: ["Transformer", "Attention Mechanism", "NLP", "Sequence Modeling", "Encoder-Decoder"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 2,
+    tag: "Generative AI",
+    year: 2014,
+    title: "Generative Adversarial Networks",
+    authors: "Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., & Bengio, Y.",
+    institution: "Université de Montréal",
+    journal: "Advances in Neural Information Processing Systems (NeurIPS 2014)",
+    doi: "10.48550/arXiv.1406.2661",
+    citations: 54210,
+    abstract: "We propose a new framework for estimating generative models via an adversarial process, in which we simultaneously train two models: a generative model G that captures the data distribution, and a discriminative model D that estimates the probability that a sample came from the training data rather than G. The training procedure for G is to maximize the probability of D making a mistake. This framework corresponds to a minimax two-player game. In the space of arbitrary functions G and D, a unique solution exists, with G recovering the training data distribution and D equal to 1/2 everywhere.",
+    keyContributions: [
+      "Introduced the GAN framework with adversarial min-max training",
+      "Proved theoretical convergence to true data distribution under ideal conditions",
+      "Opened an entirely new paradigm of generative deep learning",
+      "Enabled high-fidelity image synthesis without explicit density estimation",
+      "Introduced the concept of implicit generative models"
+    ],
+    methodology: "Two neural networks compete in a zero-sum game. The Generator G(z) maps random noise z to synthetic samples. The Discriminator D(x) outputs the probability that x is real. Trained jointly via backpropagation: D maximizes log D(x) + log(1-D(G(z))); G minimizes log(1-D(G(z))). Alternating gradient updates are applied with careful hyperparameter tuning.",
+    results: "Demonstrated convincing image generation on MNIST, the Toronto Face Database (TFD), and CIFAR-10. Qualitative and quantitative evaluations showed that adversarially trained models produce sharper, more realistic samples than contemporary methods including VAEs and RBMs.",
+    impact: "Revolutionized image synthesis, video generation, data augmentation, super-resolution, style transfer, and creative AI. Spawned hundreds of variants: DCGAN, StyleGAN, CycleGAN, Pix2Pix, BigGAN, ProGAN. Considered a landmark moment in deep learning history.",
+    tags: ["GAN", "Generative Models", "Adversarial Training", "Image Synthesis", "Deep Learning"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 3,
+    tag: "Computer Vision",
+    year: 2015,
+    title: "Deep Residual Learning for Image Recognition",
+    authors: "He, K., Zhang, X., Ren, S., & Sun, J.",
+    institution: "Microsoft Research Asia",
+    journal: "IEEE Conference on Computer Vision and Pattern Recognition (CVPR 2016)",
+    doi: "10.48550/arXiv.1512.03385",
+    citations: 162000,
+    abstract: "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers.",
+    keyContributions: [
+      "Introduced skip/shortcut connections solving the vanishing gradient problem in deep nets",
+      "Trained networks of 152 layers — unprecedented depth at the time",
+      "Won 1st place in ILSVRC 2015 classification, detection, and localization",
+      "Established ResNet as the universal backbone for computer vision",
+      "Inspired DenseNet, EfficientNet, and Vision Transformer residual designs"
+    ],
+    methodology: "Instead of learning H(x) directly, layers learn residual F(x) = H(x) − x, then output F(x) + x via identity shortcut connections. This forces the network to learn perturbations rather than full transformations, making optimization far easier. Batch normalization after each convolutional layer stabilizes training. The architecture uses bottleneck blocks for efficiency at large depths.",
+    results: "Achieved 3.57% top-5 error on the ImageNet test set using an ensemble — surpassing human-level performance (5.1%). ResNet-152 achieved 19.38% top-1 error, a 27% relative improvement over VGGNet. Also achieved top results on COCO object detection and localization.",
+    impact: "ResNet is still the most widely deployed CNN backbone worldwide. The residual connection concept is now universal in deep learning. Influenced ViT, BERT, GPT, and virtually every modern deep network. With 160,000+ citations, it is one of the most cited papers in all of computer science.",
+    tags: ["ResNet", "Skip Connections", "ImageNet", "Deep Networks", "ILSVRC"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 4,
+    tag: "NLP",
+    year: 2018,
+    title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+    authors: "Devlin, J., Chang, M. W., Lee, K., & Toutanova, K.",
+    institution: "Google AI Language",
+    journal: "North American Chapter of the ACL (NAACL 2019)",
+    doi: "10.48550/arXiv.1810.04805",
+    citations: 81000,
+    abstract: "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications.",
+    keyContributions: [
+      "Masked Language Modeling (MLM) — bidirectional context for pre-training",
+      "Next Sentence Prediction (NSP) — discourse-level language understanding",
+      "Fine-tuning paradigm: one pre-trained model, minimal task-specific layers",
+      "Set new SOTA on 11 NLP benchmarks simultaneously on release",
+      "Open-sourced weights enabling transfer learning across the NLP community"
+    ],
+    methodology: "BERT uses a multi-layer Transformer encoder. Pre-training involves: (1) MLM — randomly mask 15% of tokens, predict them using bidirectional context; (2) NSP — predict whether two sentences are consecutive. Fine-tuning adds a task-specific output layer and trains on labeled data. BERT-Base: 12 layers, 768 hidden, 12 heads, 110M params. BERT-Large: 24 layers, 1024 hidden, 16 heads, 340M params.",
+    results: "BERT-Large: 80.5% on GLUE benchmark (+7.7% over prior SOTA), 93.2 F1 on SQuAD 1.1 (human: 91.2), 83.1 F1 on SQuAD 2.0. Achieved new SOTA on Named Entity Recognition (CoNLL-2003: 92.8 F1) and SWAG (86.3%). Outperformed all prior models on every task tested.",
+    impact: "Transformed NLP entirely. Every major NLP system now uses BERT or its descendants. Spawned RoBERTa, DistilBERT, ALBERT, DeBERTa, BioBERT, SciBERT, and hundreds of domain-specific variants. Used in Google Search since 2019, affecting billions of queries daily.",
+    tags: ["BERT", "Pre-training", "Transfer Learning", "Transformers", "NLP"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 5,
+    tag: "Reinforcement Learning",
+    year: 2015,
+    title: "Human-level Control through Deep Reinforcement Learning",
+    authors: "Mnih, V., Kavukcuoglu, K., Silver, D., Rusu, A. A., Veness, J., Bellemare, M. G., Graves, A., Riedmiller, M., Fidjeland, A. K., Ostrovski, G., Petersen, S., Beattie, C., Sadik, A., Antonoglou, I., King, H., Kumaran, D., Wierstra, D., Legg, S., & Hassabis, D.",
+    institution: "Google DeepMind",
+    journal: "Nature, Vol. 518, pp. 529–533",
+    doi: "10.1038/nature14236",
+    citations: 27800,
+    abstract: "The theory of reinforcement learning provides a normative account, deeply rooted in psychological and neuroscientific perspectives on animal behaviour, of how agents may optimize their control of an environment. Here we use recent advances in training deep neural networks to develop a novel artificial agent, termed a deep Q-network agent, that can learn successful policies directly from high-dimensional sensory inputs using end-to-end reinforcement learning. We tested this agent on the challenging domain of classic Atari 2600 games. We demonstrate that the deep Q-network agent surpasses the performance of all previous algorithms and achieves a level comparable to that of a professional human games tester across a set of 49 games.",
+    keyContributions: [
+      "First successful combination of deep neural networks with Q-learning (DQN)",
+      "Experience replay memory — breaks temporal correlation in training data",
+      "Separate target Q-network — stabilizes training dynamics",
+      "End-to-end learning directly from raw pixel inputs",
+      "Superhuman performance on 29 of 49 Atari 2600 games with a single architecture"
+    ],
+    methodology: "A CNN processes stacked 84×84 grayscale frames as state representation. Experience replay stores (s, a, r, s') transitions in a fixed-size buffer; mini-batches sampled randomly for training. A separate target network with frozen weights (updated every C=10,000 steps) provides stable Q-value targets, preventing divergence. Epsilon-greedy exploration with annealing from 1.0 to 0.1 over 1 million frames.",
+    results: "Outperformed all prior RL methods on 43 of 49 Atari games. Achieved superhuman performance on 29 games including Breakout (1,952% of human score), Pong (188%), and Space Invaders. Mean score was 121.9% of professional human performance across all games using a single network architecture and hyperparameter set.",
+    impact: "Launched the era of deep reinforcement learning. Directly influenced AlphaGo, AlphaStar, OpenAI Five, and robotics control systems. Proved a single neural agent could master diverse tasks from raw sensory data — a pivotal milestone toward general AI.",
+    tags: ["DQN", "Atari", "Q-Learning", "Deep RL", "DeepMind"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 6,
+    tag: "Large Language Models",
+    year: 2020,
+    title: "Language Models are Few-Shot Learners (GPT-3)",
+    authors: "Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D. M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., & Amodei, D.",
+    institution: "OpenAI",
+    journal: "Advances in Neural Information Processing Systems (NeurIPS 2020)",
+    doi: "10.48550/arXiv.2005.14165",
+    citations: 29400,
+    abstract: "Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. While typically task-agnostic in architecture, this method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions. We show that scaling language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art fine-tuning approaches. GPT-3 has 175 billion parameters and is tested on over 20 NLP datasets.",
+    keyContributions: [
+      "175 billion parameter model — largest language model at time of publication",
+      "Demonstrated in-context learning: zero-shot, one-shot, and few-shot prompting",
+      "Strong performance across 20+ NLP tasks without any gradient updates",
+      "Defined scaling laws connecting model size, data, and compute to performance",
+      "Introduced the modern era of prompt engineering and LLM APIs"
+    ],
+    methodology: "GPT-3 uses a 96-layer autoregressive Transformer decoder with 175B parameters. Pre-trained on 499B tokens: filtered Common Crawl (60%), WebText2 (22%), Books1+Books2 (16%), Wikipedia (3%). In-context learning provides task demonstrations as part of the prompt without weight updates. Evaluated across zero-shot, one-shot, and few-shot settings.",
+    results: "Few-shot: 88.0% TriviaQA, 71.2% WebQ, 73.3% CoQA, 76.2% LAMBADA, 81.0% NaturalQS. Achieved near-SOTA on many benchmarks without fine-tuning. Also demonstrated strong arithmetic reasoning, translation, and code generation capabilities for the first time at scale.",
+    impact: "Proved that scale enables emergent capabilities previously thought impossible. Directly led to ChatGPT, GPT-4, Codex, InstructGPT. Established prompt engineering as a discipline. Sparked global discussions on AI safety, capabilities, and economic impact of large language models.",
+    tags: ["GPT-3", "Few-Shot Learning", "Scaling Laws", "In-Context Learning", "OpenAI"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 7,
+    tag: "Diffusion Models",
+    year: 2020,
+    title: "Denoising Diffusion Probabilistic Models (DDPM)",
+    authors: "Ho, J., Jain, A., & Abbeel, P.",
+    institution: "UC Berkeley",
+    journal: "Advances in Neural Information Processing Systems (NeurIPS 2020)",
+    doi: "10.48550/arXiv.2006.11239",
+    citations: 12300,
+    abstract: "We present high quality image synthesis results using diffusion probabilistic models, a class of latent variable models inspired by considerations from nonequilibrium thermodynamics. Our best results are obtained by training on a weighted variational bound designed according to a novel connection between diffusion probabilistic models and denoising score matching with Langevin dynamics, and our models naturally admit a progressive lossy decompression scheme that can be interpreted as a generalization of autoregressive decoding. On the unconditional CIFAR10 dataset, we obtain an Inception score of 9.46 and a state-of-the-art FID score of 3.17.",
+    keyContributions: [
+      "Established the modern DDPM training and sampling framework",
+      "Achieved FID of 3.17 on CIFAR-10, outperforming all GANs at the time",
+      "Unified score matching, Langevin dynamics, and variational inference",
+      "Simplified training objective: predict added noise ε at each timestep",
+      "Provided the theoretical and practical foundation for Stable Diffusion, DALL-E 2, Imagen"
+    ],
+    methodology: "A forward Markov chain gradually adds Gaussian noise over T=1000 timesteps until data becomes pure noise. A U-Net neural network learns the reverse denoising process by predicting the noise ε added at each step. Training loss is simplified to: L = E[||ε − ε_θ(√ᾱₜ x₀ + √(1−ᾱₜ) ε, t)||²]. Sampling generates images by iteratively denoising random Gaussian noise.",
+    results: "CIFAR-10: FID 3.17 (prior best GAN: 5.59), IS 9.46. LSUN Bedroom 256×256: FID 4.90, competitive with BigGAN-deep. CelebA-HQ 256×256: FID 3.26. Produced diverse, high-fidelity samples superior in quality and mode coverage compared to contemporary GANs.",
+    impact: "Became the foundation of Stable Diffusion, DALL-E 2, Midjourney, Adobe Firefly, and Imagen. Largely displaced GANs for image generation due to better training stability, diversity, and quality. Extended to video (Sora), audio (AudioLDM), 3D (DreamFusion), and protein structure generation.",
+    tags: ["DDPM", "Diffusion Models", "Image Generation", "Score Matching", "U-Net"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 8,
+    tag: "Graph Neural Networks",
+    year: 2016,
+    title: "Semi-supervised Classification with Graph Convolutional Networks",
+    authors: "Kipf, T. N., & Welling, M.",
+    institution: "University of Amsterdam",
+    journal: "International Conference on Learning Representations (ICLR 2017)",
+    doi: "10.48550/arXiv.1609.02907",
+    citations: 23600,
+    abstract: "We present a scalable approach for semi-supervised classification of nodes in a graph, based on an efficient variant of convolutional neural networks which operate directly on graphs. We motivate the choice of our convolutional architecture via a localized first-order approximation of spectral graph convolutions. Our model scales linearly in the number of graph edges and learns hidden layer representations that encode both local graph structure and features of nodes. In our experiments on citation networks and a knowledge graph dataset, we demonstrate that our approach outperforms related methods by a significant margin.",
+    keyContributions: [
+      "Introduced the GCN layer: H^(l+1) = σ(D̃^(-½) Ã D̃^(-½) H^(l) W^(l))",
+      "Spectral graph convolutions approximated to efficient first-order local operations",
+      "Linear O(|E|) complexity — scalable to large graphs",
+      "Unified node feature learning and graph topology exploitation",
+      "Foundational paper for GraphSAGE, GAT, GIN and the entire GNN field"
+    ],
+    methodology: "GCN propagates features across the graph using a normalized adjacency matrix with self-loops: Ã = A + I. Layer-wise propagation: H^(l+1) = σ(D̃^(-½) Ã D̃^(-½) H^(l) W^(l)) where D̃ is the diagonal degree matrix. For semi-supervised classification, only labeled nodes contribute to the cross-entropy loss; gradients still propagate through the entire graph structure.",
+    results: "Cora citation network: 81.5% accuracy (prior SOTA: 78.1%). Citeseer: 70.3% (prior: 67.4%). Pubmed: 79.0% (prior: 77.3%). Freebase knowledge graph: 70.3%. Outperformed all semi-supervised baselines using significantly fewer parameters and without task-specific feature engineering.",
+    impact: "Defined the standard GNN layer that became the backbone of modern graph deep learning. Spawned GraphSAGE, GAT, GIN, and thousands of applications in drug discovery, social network analysis, recommendation systems, molecular biology, traffic prediction, and fraud detection.",
+    tags: ["GCN", "Graph Learning", "Node Classification", "Semi-supervised", "Spectral"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 9,
+    tag: "Multimodal AI",
+    year: 2021,
+    title: "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+    authors: "Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I.",
+    institution: "OpenAI",
+    journal: "International Conference on Machine Learning (ICML 2021)",
+    doi: "10.48550/arXiv.2103.00020",
+    citations: 19500,
+    abstract: "State-of-the-art computer vision systems are trained to predict a fixed set of predetermined object categories. This restricted form of supervision limits their generality and usability since additional labeled data is needed to specify any other visual concept. Learning directly from raw text about images is a promising alternative which leverages a much broader source of supervision. We demonstrate that the simple pre-training task of predicting which caption goes with which image is an efficient and scalable way to learn state-of-the-art image representations from scratch on a dataset of 400 million (image, text) pairs collected from the internet.",
+    keyContributions: [
+      "Contrastive pre-training on 400 million image-text pairs from the internet",
+      "Zero-shot transfer to any visual classification task using natural language prompts",
+      "Matched supervised ResNet-50 on ImageNet zero-shot with no labeled training data",
+      "Unified image and text into a shared embedding space for cross-modal retrieval",
+      "Demonstrated robust generalization across 30+ diverse visual benchmarks"
+    ],
+    methodology: "Two encoders — a ViT or ResNet for images, and a Transformer for text — are trained with contrastive loss to maximize cosine similarity of matching (image, text) pairs and minimize it for non-matching pairs within each batch. Trained on 400M web-scraped pairs with large batch sizes (32,768). Zero-shot classification: embed candidate class names as text, find closest image embedding.",
+    results: "Zero-shot CLIP matched supervised ResNet-50 performance on ImageNet (76.2% top-1). Achieved competitive performance with task-specific models on 27 of 30 evaluated datasets including OCR (88.4%), action recognition (76.2%), geo-localization (43.3%) — all without any labeled training data.",
+    impact: "Redefined how vision and language interact in AI. Core component of DALL-E 2, Stable Diffusion guidance, and multimodal assistants. Enabled open-vocabulary object detection, visual question answering, and image search at scale. Spawned ALIGN, FLAVA, Florence, and the entire multimodal representation learning field.",
+    tags: ["CLIP", "Contrastive Learning", "Zero-shot Transfer", "Multimodal", "Vision-Language"],
+    likes: 0, liked: false, comments: []
+  },
+  {
+    id: 10,
+    tag: "Foundation Models",
+    year: 2021,
+    title: "On the Opportunities and Risks of Foundation Models",
+    authors: "Bommasani, R., Hudson, D. A., Adeli, E., Altman, R., Arora, S., von Arx, S., Bernstein, M. S., Bohg, J., Bosselut, A., Brunskill, E., Brynjolfsson, E., Buch, S., Card, D., Castellon, R., Chatterji, N., Chen, A., Creel, K., Davis, J. Q., Demszky, D., ... & Liang, P.",
+    institution: "Stanford Center for Research on Foundation Models (CRFM)",
+    journal: "arXiv Preprint — Stanford HAI Technical Report",
+    doi: "10.48550/arXiv.2108.07258",
+    citations: 5200,
+    abstract: "AI is undergoing a paradigm shift with the rise of models (e.g., BERT, DALL-E, GPT-3) that are trained on broad data at scale and are adaptable to a wide range of downstream tasks. We call these models foundation models to underscore their critically central yet incomplete character. This report provides a thorough account of the opportunities and risks of foundation models, ranging from their capabilities (e.g., language, vision, robotic manipulation, reasoning, human interaction) and technical principles (e.g., model architectures, training procedures, data curation) to their applications (e.g., in law, healthcare, education) and societal impact (e.g., inequity, misuse, economic and environmental impact, legal and ethical considerations).",
+    keyContributions: [
+      "Coined and defined the term 'Foundation Models' for large pre-trained AI systems",
+      "Comprehensive analysis across 100+ researchers spanning 8 disciplines",
+      "Identified homogenization risk — shared flaws propagate to all downstream applications",
+      "Mapped emergent capabilities and adaptation strategies (fine-tuning, prompting, in-context)",
+      "Proposed governance frameworks and research agenda for responsible development"
+    ],
+    methodology: "A multi-disciplinary collaborative analysis involving 100+ Stanford researchers across NLP, computer vision, robotics, law, economics, medicine, and ethics. Evaluated foundation models across modalities, assessed technical capabilities, social impacts, economic effects, environmental costs (compute and carbon), and proposed policy frameworks for oversight and accountability.",
+    results: "Catalogued emergent capabilities across language generation, visual reasoning, robotic manipulation, and cross-modal tasks. Identified 5 core technical properties (scale, homogenization, emergence, adaptation, societal impact), 7 key research challenges, and comprehensive risk taxonomy spanning bias, misuse, IP, privacy, and existential concerns.",
+    impact: "Shaped the research agenda and global discourse around large AI models. The term 'foundation model' is now standard in AI research and policy. Influenced EU AI Act, US Executive Order on AI, and responsible AI frameworks at major technology companies. Established CRFM as the leading center for foundation model research.",
+    tags: ["Foundation Models", "Survey", "AI Safety", "Governance", "Emergent Capabilities"],
+    likes: 0, liked: false, comments: []
+  }
+];

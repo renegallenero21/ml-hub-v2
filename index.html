@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning Hub</title>
+<link rel="stylesheet" href="css/style.css">
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ========== WELCOME PAGE ========== -->
+<div class="page active" id="page-welcome">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <nav class="welcome-nav">
+    <div class="logo">ML<span>HUB</span></div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="showPage('page-login')">Login</span>
+      <button class="btn-red-sm" onclick="showPage('page-login')">Sign Up →</button>
+    </div>
+  </nav>
+
+  <div class="welcome-hero">
+    <div class="hero-badge">// Neural Research Platform v2.0</div>
+    <h1 class="hero-title">Machine<br><span>Learning</span> Hub</h1>
+    <p class="hero-sub">EXPLORE · DISCOVER · COLLABORATE</p>
+    <p class="hero-desc">
+      A curated platform for machine learning research. Browse 10 landmark papers,
+      interact with full study breakdowns, share insights, and engage with researchers worldwide.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-red" onclick="showPage('page-login')">Get Started →</button>
+      <button class="btn-ghost" onclick="guestAccess()">Browse as Guest</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Research Papers</div></div>
+      <div class="stat"><div class="stat-num">4.2K</div><div class="stat-lbl">Citations</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">ML Categories</div></div>
+      <div class="stat"><div class="stat-num">2014–2021</div><div class="stat-lbl">Year Range</div></div>
+    </div>
+  </div>
+
+  <div class="topics-bar">
+    <div class="section-label">// Topics Covered</div>
+    <div class="chips-row">
+      <span class="chip">Deep Learning</span>
+      <span class="chip">Generative AI</span>
+      <span class="chip">Computer Vision</span>
+      <span class="chip">NLP & Transformers</span>
+      <span class="chip">Reinforcement Learning</span>
+      <span class="chip">Large Language Models</span>
+      <span class="chip">Diffusion Models</span>
+      <span class="chip">Graph Neural Networks</span>
+      <span class="chip">Multimodal AI</span>
+      <span class="chip">Foundation Models</span>
+    </div>
+  </div>
+
+  <footer class="welcome-footer">
+    <span>© 2026 ML Hub — System Integration & Architecture</span>
+    <span class="footer-tech">Powered by Supabase + Vercel</span>
+  </footer>
+</div>
+
+
+<!-- ========== LOGIN PAGE ========== -->
+<div class="page" id="page-login">
+  <div class="bg-grid"></div>
+
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="card-top-bar"></div>
+      <div class="login-logo">ML<span>HUB</span></div>
+      <div class="login-sub">// Secure Research Access Terminal</div>
+
+      <div class="tab-row">
+        <div class="tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+        <div class="tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</div>
+      </div>
+
+      <label class="lbl">Email Address</label>
+      <input class="inp" type="email" id="auth-email" placeholder="researcher@ml-hub.io">
+
+      <label class="lbl">Password</label>
+      <input class="inp" type="password" id="auth-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')handleAuth()">
+
+      <div id="signup-fields" style="display:none">
+        <label class="lbl">Confirm Password</label>
+        <input class="inp" type="password" id="auth-pass2" placeholder="••••••••">
+        <label class="lbl">Full Name (optional)</label>
+        <input class="inp" type="text" id="auth-name" placeholder="Dr. Alex Chen">
+      </div>
+
+      <button class="login-btn" id="auth-btn" onclick="handleAuth()">Login</button>
+      <div id="auth-msg"></div>
+
+      <div class="back-link">← <span onclick="showPage('page-welcome')">Back to Welcome</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========== DASHBOARD PAGE ========== -->
+<div class="page" id="page-dashboard">
+
+  <!-- NAV -->
+  <div class="dash-nav">
+    <div class="logo">ML<span>HUB</span></div>
+    <div class="search-wrap">
+      <input class="search-inp" type="text" id="search-inp" placeholder="Search papers, authors, tags..." oninput="renderGrid()">
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="avatar" id="nav-avatar">R</div>
+        <div>
+          <div class="nav-email" id="nav-email">user@ml-hub.io</div>
+          <div class="nav-session">● ACTIVE SESSION</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Research Library</div>
+      <div class="dash-desc">// 10 landmark machine learning studies — detailed, interactive & shareable</div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-box"><div class="meta-num">10</div><div class="meta-lbl">Papers</div></div>
+      <div class="meta-box"><div class="meta-num" id="meta-likes">0</div><div class="meta-lbl">Likes</div></div>
+      <div class="meta-box"><div class="meta-num" id="meta-cmts">0</div><div class="meta-lbl">Comments</div></div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <span class="filter-lbl">Filter:</span>
+    <div class="filter-chips" id="filter-chips">
+      <button class="fchip active" onclick="setFilter('All',this)">All</button>
+      <button class="fchip" onclick="setFilter('Deep Learning',this)">Deep Learning</button>
+      <button class="fchip" onclick="setFilter('Generative AI',this)">Generative AI</button>
+      <button class="fchip" onclick="setFilter('Computer Vision',this)">Computer Vision</button>
+      <button class="fchip" onclick="setFilter('NLP',this)">NLP</button>
+      <button class="fchip" onclick="setFilter('Reinforcement Learning',this)">Reinforcement RL</button>
+      <button class="fchip" onclick="setFilter('Large Language Models',this)">LLMs</button>
+      <button class="fchip" onclick="setFilter('Diffusion Models',this)">Diffusion</button>
+      <button class="fchip" onclick="setFilter('Graph Neural Networks',this)">Graph NN</button>
+      <button class="fchip" onclick="setFilter('Multimodal AI',this)">Multimodal</button>
+      <button class="fchip" onclick="setFilter('Foundation Models',this)">Foundation</button>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="research-area">
+    <div class="research-grid" id="research-grid"></div>
+    <div class="no-results" id="no-results" style="display:none">No papers match your search.</div>
+  </div>
+</div>
+
+
+<!-- ========== MODAL ========== -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div class="modal-head">
+      <div class="modal-tag-row">
+        <span class="modal-tag" id="m-tag"></span>
+        <span class="modal-year" id="m-year"></span>
+      </div>
+      <h2 class="modal-title" id="m-title"></h2>
+      <div class="modal-authors" id="m-authors"></div>
+      <div class="modal-institution" id="m-institution"></div>
+      <div class="modal-journal" id="m-journal"></div>
+      <div class="modal-doi">DOI: <span id="m-doi"></span></div>
+    </div>
+
+    <div class="modal-body">
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button class="act-btn" id="m-like-btn" onclick="toggleLike(currentId)">
+          ♥ <span id="m-likes">0</span> Likes
+        </button>
+        <div class="share-group">
+          <div class="share-url-box">
+            <span>🔗</span>
+            <span class="share-url" id="m-url"></span>
+          </div>
+          <button class="copy-btn" onclick="copyLink()">Copy</button>
+        </div>
+        <span class="cite-badge">📚 <span id="m-cites"></span> citations</span>
+      </div>
+
+      <!-- Detail Tabs -->
+      <div class="detail-tabs">
+        <div class="dtab active" onclick="switchDTab('abstract',this)">Abstract</div>
+        <div class="dtab" onclick="switchDTab('contributions',this)">Contributions</div>
+        <div class="dtab" onclick="switchDTab('methodology',this)">Methodology</div>
+        <div class="dtab" onclick="switchDTab('results',this)">Results</div>
+        <div class="dtab" onclick="switchDTab('impact',this)">Impact</div>
+      </div>
+
+      <div class="dcontent active" id="dt-abstract"><p class="dtext" id="m-abstract"></p></div>
+      <div class="dcontent" id="dt-contributions"><ul class="contrib-list" id="m-contributions"></ul></div>
+      <div class="dcontent" id="dt-methodology"><p class="dtext" id="m-methodology"></p></div>
+      <div class="dcontent" id="dt-results"><p class="dtext" id="m-results"></p></div>
+      <div class="dcontent" id="dt-impact"><p class="dtext" id="m-impact"></p></div>
+
+      <div class="tag-row" id="m-tags"></div>
+
+      <!-- Comments -->
+      <div class="comments-section">
+        <div class="comments-hdr">
+          <span class="comments-title">// Discussion</span>
+          <span class="comments-count" id="m-cmt-count">0 comments</span>
+        </div>
+        <div id="comments-list"></div>
+        <div class="cmt-form">
+          <div class="cmt-input-row">
+            <div class="cmt-avatar" id="cmt-avatar">R</div>
+            <input class="cmt-inp" id="cmt-inp" placeholder="Share your thoughts..." onkeydown="if(event.key==='Enter')submitComment()">
+          </div>
+          <button class="cmt-submit" onclick="submitComment()">Post Comment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/data.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
